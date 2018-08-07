@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/css/index.css">
 <script src='/js/highmaps.js'></script>
 <script src='/js/drilldown.js'></script>
+<script src='/js/nunjucks.min.js'></script>
 
 <script src='/js/china.js'></script>
 <script src='/js/zhejiang.js'></script>
@@ -162,35 +163,33 @@
     }
 
     function formatter() {
-        let str = '';
-        this.point.people.forEach((p) => {
-            str += `
-            <div class="pinfo">
-                <div class="pname">${p.name}</div>
-                <div class="city">${p.city}</div>
-                <div class="school">${p.school}</div>
+        let template = `
+        <div class="tooltip">
+            <div class="series">{{series}}</div>
+            <div class="profile">
+                <div class="name">{{name}}:</div>
+                <div class="value">{{value}}人</div>
             </div>
-            `
-        });
-
-        let list = '';
-        if (this.point.name !== '浙江') {
-            list = `
+            {% if name !== '浙江' %}
             <div class="list">
-                ${str}
-            </div>
-            `
-        }
-        return `
-            <div class="tooltip">
-                <div class="series">${this.series.name}</div>
-                <div class="profile">
-                    <div class="name">${this.point.name}:</div>
-                    <div class="value">${this.point.value}人</div>
+                {% for p in people %}
+                <div class="pinfo">
+                    <div class="pname">{{p.name}}</div>
+                    <div class="city">{{p.city}}</div>
+                    <div class="school">{{p.school}}</div>
                 </div>
-                ${list}
+                {% endfor %}
             </div>
-        `
+            {% endif %}
+        </div>
+        `;
+
+        return nunjucks.renderString(template, {
+            name: this.point.name,
+            series: this.series.name,
+            value: this.point.value,
+            people: this.point.people
+        });
     }
 
     // 初始化图表
