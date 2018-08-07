@@ -1,0 +1,28 @@
+.highcharts-tooltip span[data-z-index] {
+  padding: .4em .8em; }
+
+.tooltip {
+  display: flex;
+  flex-direction: column; }
+
+.series {
+  font-size: .8em; }
+
+.profile {
+  display: flex;
+  flex-direction: row; }
+  .profile > .value {
+    margin-left: 1em; }
+
+.list {
+  display: flex;
+  flex-direction: column; }
+
+.pinfo {
+  display: flex;
+  flex-direction: row;
+  font-size: .8em; }
+  .pinfo > .city, .pinfo > .school {
+    margin-left: .6em; }
+
+/*# sourceMappingURL=index.css.map */
